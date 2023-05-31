@@ -11,31 +11,42 @@ import com.example.composeforflutterdev.screens.CartScreen
 import com.example.composeforflutterdev.screens.HomeScreen
 import com.example.composeforflutterdev.screens.ProductScreen
 import com.example.composeforflutterdev.screens.SettingScreen
+import com.example.composeforflutterdev.screens.auth.LoginScreen
+import com.example.composeforflutterdev.screens.auth.RegisterScreen
 
 
 @Composable
 fun BottomNavGraph(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = BottomBarScreen.Home.route,
+        startDestination = "login", //BottomBarScreen.Home.route,
         modifier = Modifier.padding(paddingValues)
     ) {
 
+        composable(route = "login") {
+            LoginScreen(navController)
+        }
+        composable(route = "register") {
+            RegisterScreen(navController)
+        }
+
+
+
         composable(route = BottomBarScreen.Home.route) {
-            HomeScreen()
+            HomeScreen(navController)
         }
 
         composable(route = BottomBarScreen.Product.route) {
-            ProductScreen()
+            ProductScreen(navController)
         }
 
         composable(route = BottomBarScreen.Cart.route) {
-            CartScreen()
+            CartScreen(navController)
         }
 
 
         composable(route = BottomBarScreen.Setting.route) {
-            SettingScreen()
+            SettingScreen(navController)
         }
     }
 }

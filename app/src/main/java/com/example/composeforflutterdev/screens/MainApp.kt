@@ -35,32 +35,6 @@ import com.example.composeforflutterdev.route.BottomNavGraph
 fun MainApp() {
     val navController = rememberNavController();
     Scaffold(
-        topBar =  {
-            TopAppBar(
-                title = { Text(text = "Home")},
-
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Home Menu Icon")
-                    }
-                },
-
-                actions =  {
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = "Search Menu Icon")
-                    }
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Default.Info, contentDescription = "Info Menu Icon")
-                    }
-
-                }
-            )
-            
-        },
-        bottomBar = {
-            BottomBar(navController = navController)
-        }
-
     ) { paddingValue ->
 
         BottomNavGraph(navController = navController, paddingValues = paddingValue)
