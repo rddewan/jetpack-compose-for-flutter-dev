@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
@@ -22,33 +23,25 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductScreen(navController: NavController) {
+fun ProductDetailScreen(navController: NavController) {
+    val canNavigateBack = navController.previousBackStackEntry != null
     Scaffold(
         topBar =  {
             TopAppBar(
-                title = { Text(text = "Product")},
+                title = { Text(text = "Product Detail")},
 
                 navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Home Menu Icon")
+                    if (canNavigateBack) {
+                        IconButton(onClick = { navController.navigateUp()}) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "back"
+                            )
+                        }
                     }
                 },
-
-                actions =  {
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = "Search Menu Icon")
-                    }
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Default.Info, contentDescription = "Info Menu Icon")
-                    }
-
-                }
             )
-
         },
-        bottomBar = {
-            BottomBar(navController = navController)
-        }
 
     ) { paddingValue ->
 
@@ -60,7 +53,7 @@ fun ProductScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(text = "Product")
+            Text(text = "Product Detail")
 
         }
 

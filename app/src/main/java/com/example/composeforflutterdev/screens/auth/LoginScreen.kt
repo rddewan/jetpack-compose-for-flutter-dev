@@ -51,8 +51,15 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedButton(onClick = { navController.navigate("home") }) {
-                Text(text = "Login")
+            OutlinedButton(
+                onClick = {
+                    navController.navigate("main") {
+                        popUpTo("auth") {
+                            inclusive = true
+                        }
+                    }
+                }) {
+                    Text(text = "Login")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
