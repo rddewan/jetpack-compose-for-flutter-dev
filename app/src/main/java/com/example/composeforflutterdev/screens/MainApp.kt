@@ -12,8 +12,10 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -21,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -38,7 +41,7 @@ fun MainApp() {
     ) { paddingValue ->
 
         BottomNavGraph(navController = navController, paddingValues = paddingValue)
-        
+
     }
     
 }
@@ -55,9 +58,17 @@ fun BottomBar(navController: NavController) {
     val navBackStackEntry  by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    NavigationBar() {
+    NavigationBar(
+        tonalElevation = 2.dp,
+        //containerColor = MaterialTheme.colorScheme.primary,
+        //contentColor = MaterialTheme.colorScheme.error
+    ) {
         screens.forEach { screen->
             NavigationBarItem(
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.inversePrimary,
+                    selectedTextColor = MaterialTheme.colorScheme.inverseSurface,
+                ),
                 label = { Text(text = screen.title)},
                 icon = {
                        Icon(imageVector = screen.icon, contentDescription = screen.title)
