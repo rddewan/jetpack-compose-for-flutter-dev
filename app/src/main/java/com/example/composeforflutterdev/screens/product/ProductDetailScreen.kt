@@ -23,7 +23,7 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductDetailScreen(navController: NavController) {
+fun ProductDetailScreen(navController: NavController, productId: Int) {
     val canNavigateBack = navController.previousBackStackEntry != null
     Scaffold(
         topBar =  {
@@ -54,6 +54,8 @@ fun ProductDetailScreen(navController: NavController) {
         ) {
 
             Text(text = "Product Detail")
+
+            Text(text = "ProductId: $productId")
 
         }
 

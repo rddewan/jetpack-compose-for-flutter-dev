@@ -70,7 +70,7 @@ fun ProductScreen(navController: NavController) {
 
             OutlinedButton(
                 onClick = {
-                    navController.navigate("product_detail")
+                    navController.navigate("product_detail/11")
                 }) {
                 Text(text = "Product Detail")
             }
