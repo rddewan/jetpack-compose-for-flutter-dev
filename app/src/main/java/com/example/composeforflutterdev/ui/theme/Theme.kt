@@ -115,7 +115,8 @@ fun AppTheme(
 //  }
 
   MaterialTheme(
-    colorScheme = colors,
-    content = content
+      colorScheme = colors,
+      typography = typography,
+      content = content
   )
 }
