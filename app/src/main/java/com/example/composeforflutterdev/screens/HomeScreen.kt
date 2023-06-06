@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.composeforflutterdev.route.BottomNavGraph
+import com.example.composeforflutterdev.ui.theme.shapes
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,6 +72,7 @@ fun HomeScreen(navController: NavController) {
                 icon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add") },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
+                shape = MaterialTheme.shapes.extraSmall,
                 onClick =  {
 
                 }
@@ -93,7 +95,8 @@ fun HomeScreen(navController: NavController) {
                     .padding(horizontal = 16.dp, vertical = 4.dp)
                     .clickable {
 
-                    }
+                    },
+                shape = MaterialTheme.shapes.extraSmall
             ) {
                 Column (
                     modifier = Modifier
