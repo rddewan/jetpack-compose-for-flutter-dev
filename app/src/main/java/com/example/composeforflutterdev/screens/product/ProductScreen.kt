@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.composeforflutterdev.screens.product.data.ProductModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,10 +80,30 @@ fun ProductScreen(navController: NavController) {
 
             OutlinedButton(
                 onClick = {
+                    val product = ProductModel(
+                        id = 1,
+                        name = " Some Product",
+                        description = " Some product description"
+                    )
+
+                    navController.currentBackStackEntry?.savedStateHandle
+                        ?.set("product", product)
+
                     navController.navigate("product_detail/11")
+
                 }) {
                 Text(text = "Product Detail")
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            val value = navController.currentBackStackEntry
+                ?.savedStateHandle?.get<String>("value")
+            
+            if (value != null) {
+                Text(text = value)
+            }
+
 
         }
 

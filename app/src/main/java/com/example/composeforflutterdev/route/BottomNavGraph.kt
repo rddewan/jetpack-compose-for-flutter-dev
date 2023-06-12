@@ -19,6 +19,7 @@ import com.example.composeforflutterdev.screens.ProductScreen
 import com.example.composeforflutterdev.screens.SettingScreen
 import com.example.composeforflutterdev.screens.auth.LoginScreen
 import com.example.composeforflutterdev.screens.auth.RegisterScreen
+import com.example.composeforflutterdev.screens.product.data.ProductModel
 
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
@@ -78,9 +79,15 @@ fun BottomNavGraph(navController: NavHostController, paddingValues: PaddingValue
             route = "product_detail/{productId}",
             arguments = listOf(navArgument("productId"){type = NavType.IntType})
         ) {
+            //val product = it.savedStateHandle.get<ProductModel>("product")
+            val product = navController
+                .previousBackStackEntry
+                ?.savedStateHandle?.get<ProductModel>("product")
+
             ProductDetailScreen(
                 navController,
-                productId = it.arguments?.getInt("productId") ?: 1
+                productId = it.arguments?.getInt("productId") ?: 1,
+                product = product
             )
         }
 
