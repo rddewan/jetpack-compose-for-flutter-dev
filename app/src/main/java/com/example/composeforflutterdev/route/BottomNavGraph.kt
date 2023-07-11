@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -20,9 +23,10 @@ import com.example.composeforflutterdev.screens.SettingScreen
 import com.example.composeforflutterdev.screens.auth.LoginScreen
 import com.example.composeforflutterdev.screens.auth.RegisterScreen
 import com.example.composeforflutterdev.screens.product.data.ProductModel
+import com.example.composeforflutterdev.viewmodel.SettingViewModel
 
 
-fun NavGraphBuilder.authGraph(navController: NavController) {
+fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation(
         startDestination = "login",
         route = "auth"
@@ -37,7 +41,7 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
     }
 }
 
-fun  NavGraphBuilder.mainGraph(navController: NavController) {
+fun  NavGraphBuilder.mainGraph(navController: NavHostController) {
 
     navigation(
         startDestination = BottomBarScreen.Home.route,
@@ -57,7 +61,16 @@ fun  NavGraphBuilder.mainGraph(navController: NavController) {
         }
 
         composable(route = BottomBarScreen.Setting.route) {
-            SettingScreen(navController)
+            //val viewModel = SettingViewModel()
+            //val viewModel = viewModel<SettingViewModel>()
+            val viewModel = viewModel<SettingViewModel>(
+                factory = object : ViewModelProvider.Factory {
+                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                        return SettingViewModel(themeMode = "dark") as T
+                    }
+                }
+            )
+            SettingScreen(navController, viewModel = viewModel)
         }
 
     }
