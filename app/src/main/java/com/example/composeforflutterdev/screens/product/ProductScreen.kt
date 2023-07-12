@@ -26,11 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.composeforflutterdev.screens.product.data.ProductModel
+import com.example.composeforflutterdev.viewmodel.SharedProductViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductScreen(navController: NavController) {
+fun ProductScreen(navController: NavController, sharedProductViewModel: SharedProductViewModel) {
     Scaffold(
         topBar =  {
             TopAppBar(
@@ -80,6 +81,9 @@ fun ProductScreen(navController: NavController) {
 
             OutlinedButton(
                 onClick = {
+
+                    sharedProductViewModel.updateProductId("25")
+
                     val product = ProductModel(
                         id = 1,
                         name = " Some Product",

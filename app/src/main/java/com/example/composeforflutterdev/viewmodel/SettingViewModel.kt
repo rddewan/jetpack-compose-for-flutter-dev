@@ -48,5 +48,10 @@ class SettingViewModel(themeMode: String): ViewModel() {
         }
     }
 
+    override fun onCleared() {
+        println("SettingViewModel is cleared")
+        super.onCleared()
+    }
+
 
 }

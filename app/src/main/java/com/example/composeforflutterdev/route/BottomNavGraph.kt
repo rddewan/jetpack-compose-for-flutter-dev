@@ -3,10 +3,12 @@ package com.example.composeforflutterdev.route
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -24,6 +26,7 @@ import com.example.composeforflutterdev.screens.auth.LoginScreen
 import com.example.composeforflutterdev.screens.auth.RegisterScreen
 import com.example.composeforflutterdev.screens.product.data.ProductModel
 import com.example.composeforflutterdev.viewmodel.SettingViewModel
+import com.example.composeforflutterdev.viewmodel.SharedProductViewModel
 
 
 fun NavGraphBuilder.authGraph(navController: NavHostController) {
@@ -52,13 +55,12 @@ fun  NavGraphBuilder.mainGraph(navController: NavHostController) {
             HomeScreen(navController)
         }
 
-        composable(route = BottomBarScreen.Product.route) {
-            ProductScreen(navController)
-        }
 
         composable(route = BottomBarScreen.Cart.route) {
             CartScreen(navController)
         }
+
+        productGraph(navController)
 
         composable(route = BottomBarScreen.Setting.route) {
             //val viewModel = SettingViewModel()
@@ -76,6 +78,39 @@ fun  NavGraphBuilder.mainGraph(navController: NavHostController) {
     }
 }
 
+fun NavGraphBuilder.productGraph(navController: NavHostController) {
+    navigation(
+        startDestination = BottomBarScreen.Product.route,
+        route = "products"
+    ) {
+
+        composable(route = BottomBarScreen.Product.route) {
+            val viewModel = it.sharedViewModel<SharedProductViewModel>(navController = navController)
+            ProductScreen(navController, viewModel)
+        }
+
+        composable(
+            route = "product_detail/{productId}",
+            arguments = listOf(navArgument("productId"){type = NavType.IntType})
+        ) {
+            //val product = it.savedStateHandle.get<ProductModel>("product")
+
+            val viewModel = it.sharedViewModel<SharedProductViewModel>(navController = navController)
+
+            val product = navController
+                .previousBackStackEntry
+                ?.savedStateHandle?.get<ProductModel>("product")
+
+            ProductDetailScreen(
+                navController,
+                productId = it.arguments?.getInt("productId") ?: 1,
+                product = product,
+                viewModel
+            )
+        }
+    }
+}
+
 @Composable
 fun BottomNavGraph(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(
@@ -88,21 +123,23 @@ fun BottomNavGraph(navController: NavHostController, paddingValues: PaddingValue
 
         mainGraph(navController)
 
-        composable(
-            route = "product_detail/{productId}",
-            arguments = listOf(navArgument("productId"){type = NavType.IntType})
-        ) {
-            //val product = it.savedStateHandle.get<ProductModel>("product")
-            val product = navController
-                .previousBackStackEntry
-                ?.savedStateHandle?.get<ProductModel>("product")
-
-            ProductDetailScreen(
-                navController,
-                productId = it.arguments?.getInt("productId") ?: 1,
-                product = product
-            )
-        }
 
     }
+}
+
+// shared view model extensions
+@Composable
+inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
+    navController: NavHostController,
+): T {
+    // get the current nestedNavGraph parent route and if null return the new view model instance
+    val navGraphRoute = destination.parent?.route ?: return viewModel()
+    // when nav back entry change get the NavBackStackEntry of Nested NavGraph
+    val parentEntry = remember(this) {
+        navController.getBackStackEntry(navGraphRoute)
+    }
+
+    // returns a view model with  NavBackStackEntry
+    // scoped view model to the parent NavBackStackEntry
+    return viewModel(parentEntry)
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.composeforflutterdev.screens.product.data.ProductModel
+import com.example.composeforflutterdev.viewmodel.SharedProductViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +30,8 @@ import com.example.composeforflutterdev.screens.product.data.ProductModel
 fun ProductDetailScreen(
     navController: NavController,
     productId: Int,
-    product: ProductModel?
+    product: ProductModel?,
+    sharedProductViewModel: SharedProductViewModel
 ) {
     val canNavigateBack = navController.previousBackStackEntry != null
 
@@ -72,6 +74,8 @@ fun ProductDetailScreen(
             Text(text = "Product Detail")
 
             Text(text = "ProductId: $productId")
+
+            Text(text = "Shared ViewModel ProductId: ${sharedProductViewModel.productId}")
 
             if (product != null) {
                 Text(text = "Id: ${product.id}")

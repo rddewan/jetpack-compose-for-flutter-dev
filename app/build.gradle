@@ -67,12 +67,12 @@ dependencies {
     implementation "androidx.compose.material:material:1.4.3"
 
      //https://developer.android.com/jetpack/androidx/releases/lifecycle#groovy
-    def lifecycle_version = "2.6.1"
-
-    // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    // ViewModel utilities for Compose
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+//    def lifecycle_version = "2.6.1"
+//
+//    // ViewModel
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+//    // ViewModel utilities for Compose
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
 
 
 
